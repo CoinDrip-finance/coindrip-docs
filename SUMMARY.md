@@ -1,0 +1,16 @@
+# Table of contents
+
+* [What is CoinDrip?](README.md)
+* [📖 FAQ](faq/README.md)
+  * [Basics](faq/basics.md)
+  * [Technical Glossary](faq/technical-glossary.md)
+  * [Security](faq/security.md)
+  * [Known Issues](faq/known-issues.md)
+* [⚒ Technical Guides](technical-guides/README.md)
+  * [Codebase](technical-guides/codebase.md)
+  * [Chains](technical-guides/chains.md)
+  * [API](technical-guides/api.md)
+* [🔍 Technical Reference](technical-reference/README.md)
+  * [Streams](technical-reference/streams.md)
+  * [Endpoints](technical-reference/endpoints.md)
+  * [Views](technical-reference/views.md)
