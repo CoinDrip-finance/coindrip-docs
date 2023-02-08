@@ -71,7 +71,8 @@ This endpoint can be called by the sender or the recipient and will cancel a str
 #[endpoint(cancelStream)]
 fn cancel_stream(
     &self,
-    stream_id: u64
+    stream_id: u64,
+    with_claim: OptionalValue<bool>
 )
 ```
 

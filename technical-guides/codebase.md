@@ -16,19 +16,19 @@ Depending on how you plan to integrate the CoinDrip protocol into your dApp, you
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.67.0-nightly",
-            "commitHash": "b28d30e1e3c2b90fd08b7dd79d8e63884d1e0339",
-            "commitDate": "2022-12-06",
+            "version": "1.66.0-nightly",
+            "commitHash": "b8c35ca26b191bb9a9ac669a4b3f4d3d52d97fb1",
+            "commitDate": "2022-10-15",
             "channel": "Nightly",
-            "short": "rustc 1.67.0-nightly (b28d30e1e 2022-12-06)"
+            "short": "rustc 1.66.0-nightly (b8c35ca26 2022-10-15)"
         },
         "contractCrate": {
             "name": "coindrip",
-            "version": "0.1.2-alpha"
+            "version": "1.0.1-beta"
         },
         "framework": {
-            "name": "elrond-wasm",
-            "version": "0.38.0"
+            "name": "multiversx-sc",
+            "version": "0.39.2"
         }
     },
     "name": "CoinDrip",
@@ -66,18 +66,47 @@ Depending on how you plan to integrate the CoinDrip protocol into your dApp, you
         },
         {
             "docs": [
-                "This view is used to return the active balance of the sender/recipient of a stream based on the stream id and the address"
+                "",
+                "Calculates the recipient balance based on the amount stream so far and the already claimed amount",
+                "|xxxx|*******|--|",
+                "S            C  E",
+                "S = start time",
+                "xxxx = already claimed amount",
+                "C = current time",
+                "E = end time",
+                "The zone marked with \"****...\" represents the recipient balance"
             ],
-            "name": "getBalanceOf",
+            "name": "recipientBalance",
             "mutability": "readonly",
             "inputs": [
                 {
                     "name": "stream_id",
                     "type": "u64"
-                },
+                }
+            ],
+            "outputs": [
                 {
-                    "name": "address",
-                    "type": "Address"
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "Calculates the sender balance based on the recipient balance and the claimed balance",
+                "|----|-------|**|",
+                "S   L.C      C  E",
+                "S = start time",
+                "L.C = last claimed amount",
+                "C = current time",
+                "E = end time",
+                "The zone marked with \"**\" represents the sender balance"
+            ],
+            "name": "senderBalance",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "stream_id",
+                    "type": "u64"
                 }
             ],
             "outputs": [
@@ -106,6 +135,27 @@ Depending on how you plan to integrate the CoinDrip protocol into your dApp, you
                 "!!! The stream needs to be cancelable (a property that is set when the stream is created by the sender)"
             ],
             "name": "cancelStream",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "stream_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "_with_claim",
+                    "type": "optional<bool>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "After a stream was cancelled, you can call this endpoint to claim the streamed tokens as a recipient or the remaining tokens as a sender",
+                "This endpoint is especially helpful when the recipient/sender is a non-payable smart contract",
+                "For convenience, this endpoint is automatically called by default from the cancel_stream endpoint (is not instructed otherwise by the \"_with_claim\" param)"
+            ],
+            "name": "claimFromStreamAfterCancel",
             "mutability": "mutable",
             "inputs": [
                 {
@@ -235,12 +285,30 @@ Depending on how you plan to integrate the CoinDrip protocol into your dApp, you
                     "name": "canceled_by",
                     "type": "Address",
                     "indexed": true
+                },
+                {
+                    "name": "claimed_amount",
+                    "type": "BigUint",
+                    "indexed": true
                 }
             ]
         }
     ],
     "hasCallback": false,
     "types": {
+        "BalancesAfterCancel": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "sender_balance",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "recipient_balance",
+                    "type": "BigUint"
+                }
+            ]
+        },
         "Stream": {
             "type": "struct",
             "fields": [
@@ -265,15 +333,7 @@ Depending on how you plan to integrate the CoinDrip protocol into your dApp, you
                     "type": "BigUint"
                 },
                 {
-                    "name": "remaining_balance",
-                    "type": "BigUint"
-                },
-                {
-                    "name": "last_claim",
-                    "type": "u64"
-                },
-                {
-                    "name": "rate_per_second",
+                    "name": "claimed_amount",
                     "type": "BigUint"
                 },
                 {
@@ -287,6 +347,10 @@ Depending on how you plan to integrate the CoinDrip protocol into your dApp, you
                 {
                     "name": "end_time",
                     "type": "u64"
+                },
+                {
+                    "name": "balances_after_cancel",
+                    "type": "Option<BalancesAfterCancel>"
                 }
             ]
         }
