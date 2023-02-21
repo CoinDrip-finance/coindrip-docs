@@ -1,12 +1,12 @@
 # Views
 
-## getBalanceOf
+## recipientBalance
 
-This view is used to return the active balance of the sender/recipient of a stream based on the stream id and the address. If you call it with any other address than the sender/recipient it will return zero.
+This view is used to return the active balance of the recipient of a specific stream.
 
 ```rust
-#[view(getBalanceOf)]
-fn balance_of(&self, stream_id: u64, address: ManagedAddress) -> BigUint
+#[view(recipientBalance)]
+fn recipient_balance(&self, stream_id: u64) -> BigUint
 ```
 
 You can use the MultiversX public APIs to query the CoinDrip smart contract. Let's use axios for an example of such a call:
@@ -14,9 +14,31 @@ You can use the MultiversX public APIs to query the CoinDrip smart contract. Let
 ```typescript
 await axios.post('https://devnet-gateway.multiversx.com/vm-values/int',
     {
-        funcName: 'getBalanceOf',
+        funcName: 'recipientBalance',
         scAddress: 'erd1qqqqqqqqqqqqqpgqfgned8q9zqwaeya4sc0stf7elpj6ylsdlpzqwhk5ye',
-        args: ["STREAM ID HEX", "ADDRESS HEX"],
+        args: ["STREAM ID HEX"],
+        value: "0"
+    }
+);
+```
+
+## senderBalance
+
+This view is used to return the active balance of the sender of a specific stream.
+
+```rust
+#[view(senderBalance)]
+fn sender_balance(&self, stream_id: u64) -> BigUint
+```
+
+You can use the MultiversX public APIs to query the CoinDrip smart contract. Let's use axios for an example of such a call:
+
+```typescript
+await axios.post('https://devnet-gateway.multiversx.com/vm-values/int',
+    {
+        funcName: 'senderBalance',
+        scAddress: 'erd1qqqqqqqqqqqqqpgqfgned8q9zqwaeya4sc0stf7elpj6ylsdlpzqwhk5ye',
+        args: ["STREAM ID HEX"],
         value: "0"
     }
 );

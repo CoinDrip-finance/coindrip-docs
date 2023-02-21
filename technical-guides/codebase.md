@@ -6,7 +6,7 @@ The CoinDrip protocol is open-source, and the code is available on GitHub.
 
 {% embed url="https://github.com/CoinDrip-finance/coindrip-protocol-sc" %}
 
-The code is also audited by Arda, and you can check the audit report here.
+The code is also audited by Arda, and you can check the audit report [here](https://arda.run/audits/coindrip).
 
 ## ABI
 

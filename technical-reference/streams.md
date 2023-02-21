@@ -2,16 +2,6 @@
 
 Streams are the core component of the CoinDrip protocol. All things that are built and that will be built will be around token streams for real-time payments.
 
-A CoinDrip stream can be referred to by seven properties:
-
-* Sender - ManagedAddress - A MultiversX address
-* Recipient - ManagedAddress - A MultiversX address
-* Deposit - BigUint - The number of streamed tokens
-* Token - EgldOrEsdtTokenIdentifier - EGLD or ESDT Token
-* Start time - u64 - The timestamp when the stream starts
-* End time - u64 - The timestamp when the stream ends
-* Is cancellable - bool - Can the stream be canceled after it was created?
-
 The actual Stream struct stored on the blockchain looks like this:
 
 ```rust

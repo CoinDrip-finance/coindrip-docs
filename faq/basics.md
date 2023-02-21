@@ -6,7 +6,7 @@ description: Start streaming tokens in seconds...
 
 ## How can I access the CoinDrip protocol?
 
-The easiest way of accessing the CoinDrip protocol is by using our CoinDrip dApp.
+The easiest way of accessing the CoinDrip protocol is by using our [CoinDrip dApp](https://app.coindrip.finance/).
 
 We're working with various projects from the MultiversX ecosystem to make the CoinDrip protocol accessible through more and more dApps. _If you're a project building on MultiversX and want to integrate the CoinDrip protocol, check out the_ [technical-guides](../technical-guides/ "mention") _and_ [technical-reference](../technical-reference/ "mention") _or contact us at contact@coindrip.finance or on_ [_Twitter_](https://twitter.com/CoinDripHQ)_._
 

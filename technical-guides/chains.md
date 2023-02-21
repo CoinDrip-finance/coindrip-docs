@@ -4,7 +4,7 @@ Currently, CoinDrip has two official deployments on MultiversX mainnet and devne
 
 {% tabs %}
 {% tab title="Mainnet" %}
-Contract Address: TBA
+Contract Address: [erd1qqqqqqqqqqqqqpgqqnm3x37972323nuv3l3kywev0n8q5n6gyc8qwljqz9](https://explorer.multiversx.com/accounts/erd1qqqqqqqqqqqqqpgqqnm3x37972323nuv3l3kywev0n8q5n6gyc8qwljqz9)
 {% endtab %}
 
 {% tab title="Devnet" %}

@@ -76,11 +76,38 @@ fn cancel_stream(
 )
 ```
 
+{% hint style="info" %}
+If you call this endpoint with the "with\_claim" param "true", it will also claim your remaining funds (if any) after the cancellation.&#x20;
+{% endhint %}
+
 Example of building a cancel stream transaction payload using [mx js sdk](https://github.com/multiversx/mx-sdk-js-core):
 
 ```typescript
 TransactionPayload.contractCall()
       .setFunction(new ContractFunction("cancelStream"))
+      .addArg(new U64Value(9)) // stream id
+      .build();
+```
+
+## Claim from stream after cancel
+
+After a stream is canceled, you can call this endpoint to claim the streamed tokens as a recipient or the remaining tokens as a sender (if any). **This endpoint is especially helpful when the recipient/sender is a non-payable smart contract.**
+
+For convenience, this endpoint is automatically called by default from the [#cancel-stream](endpoints.md#cancel-stream "mention") endpoint (is not instructed otherwise by the "with\_claim" param).
+
+```rust
+#[endpoint(claimFromStreamAfterCancel)]
+fn claim_from_stream_after_cancel(
+        &self,
+        stream_id: u64
+)
+```
+
+Example of building a claim from steram after cancel transaction payload using [mx js sdk](https://github.com/multiversx/mx-sdk-js-core):
+
+```typescript
+TransactionPayload.contractCall()
+      .setFunction(new ContractFunction("claimFromStreamAfterCancel"))
       .addArg(new U64Value(9)) // stream id
       .build();
 ```
